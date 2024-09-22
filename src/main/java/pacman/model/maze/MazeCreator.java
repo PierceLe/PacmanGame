@@ -36,7 +36,6 @@ public class MazeCreator {
                     /**
                      * TODO: Implement Factory Method Pattern
                      */
-
                 }
 
                 y += 1;
