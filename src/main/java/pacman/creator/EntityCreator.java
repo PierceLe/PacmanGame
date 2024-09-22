@@ -14,7 +14,7 @@ public abstract class EntityCreator {
 
 
 
-    protected BoundingBoxImpl getBoundingBoxOfObject(int x, int y) {`
+    protected BoundingBoxImpl getBoundingBoxOfObject(int x, int y) {
         Double imageWidth = image.getWidth();
         Double imageHeight = image.getHeight();
         Double middleCoordinateX = (double) (16 * x + 16/2);
