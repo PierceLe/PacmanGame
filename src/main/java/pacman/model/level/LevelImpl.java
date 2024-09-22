@@ -46,7 +46,6 @@ public class LevelImpl implements Level {
     private void initLevel(LevelConfigurationReader levelConfigurationReader) {
         // Fetch all renderables for the level
         this.renderables = maze.getRenderables();
-
         // Set up player
         if (!(maze.getControllable() instanceof Controllable)) {
             throw new ConfigurationParseException("Player entity is not controllable");
@@ -106,7 +105,6 @@ public class LevelImpl implements Level {
 
         // Update the dynamic entities
         List<DynamicEntity> dynamicEntities = getDynamicEntities();
-
         for (DynamicEntity dynamicEntity : dynamicEntities) {
             maze.updatePossibleDirections(dynamicEntity);
             dynamicEntity.update();
