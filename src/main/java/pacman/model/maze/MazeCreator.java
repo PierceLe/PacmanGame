@@ -34,7 +34,7 @@ public class MazeCreator {
 
                 for (int x = 0; x < row.length; x++){
                     /**
-                     * TO DO: Implement Factory Method Pattern
+                     * TODO: Implement Factory Method Pattern
                      */
 
                 }
