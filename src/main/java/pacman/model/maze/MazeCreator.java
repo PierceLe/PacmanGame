@@ -1,6 +1,7 @@
 package pacman.model.maze;
 
-import pacman.creator.ConcreteCreator;
+import pacman.creator.FactoryCollection;
+import pacman.creator.EntityCreator;
 import pacman.model.entity.Renderable;
 
 import java.io.File;
@@ -39,11 +40,11 @@ public class MazeCreator {
                     /**
                      * TODO: Implement Factory Method Pattern
                      */
-                    ConcreteCreator creator = new ConcreteCreator();
-                    Renderable renderable = creator.createRenderableObject(row[x], x, y);
+                    FactoryCollection factoryCollection = new FactoryCollection();
+                    EntityCreator entityCreator = factoryCollection.getEntityCreator(row[x]);
+                    Renderable renderable = entityCreator == null ? null : entityCreator.createRenderableObject(x, y, row[x]);
                     maze.addRenderable(renderable, row[x], x, y);
                 }
-
                 y += 1;
             }
 
