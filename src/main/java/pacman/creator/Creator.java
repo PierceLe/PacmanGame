@@ -1,2 +1,4 @@
-package pacman.creator;public interface Creator {
+package pacman.creator;
+
+public interface Creator {
 }
