@@ -1,5 +1,8 @@
 package pacman.model.maze;
 
+import pacman.creator.ConcreteCreator;
+import pacman.model.entity.Renderable;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -36,6 +39,9 @@ public class MazeCreator {
                     /**
                      * TODO: Implement Factory Method Pattern
                      */
+                    ConcreteCreator creator = new ConcreteCreator();
+                    Renderable renderable = creator.createRenderableObject(row[x], x, y);
+                    maze.addRenderable(renderable, row[x], x, y);
                 }
 
                 y += 1;
@@ -47,6 +53,7 @@ public class MazeCreator {
             System.out.println("No maze file was found.");
             exit(0);
         } catch (Exception e){
+            e.printStackTrace();
             System.out.println("Error");
             exit(0);
         }

@@ -1,6 +1,7 @@
 package pacman;
 
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import pacman.model.engine.GameEngine;
 import pacman.model.engine.GameEngineImpl;

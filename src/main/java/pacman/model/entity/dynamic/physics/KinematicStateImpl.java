@@ -10,11 +10,11 @@ public class KinematicStateImpl implements KinematicState {
     private Vector2D velocity;
     private Direction direction;
 
-    private KinematicStateImpl(
+    public KinematicStateImpl(
             Vector2D position,
             double speed,
             Direction direction
-            ) {
+    ) {
         this.position = position;
         this.previousPosition = position;
         this.speed = speed;
