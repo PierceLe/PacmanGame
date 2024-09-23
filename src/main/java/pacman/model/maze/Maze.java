@@ -105,9 +105,6 @@ public class Maze {
     // calculates whether entity is in a position where it is able to turn
     if (Math.abs(getCenterOfTile(xTile) - dynamicEntity.getCenter().getX()) < MAX_CENTER_DISTANCE &&
         Math.abs(getCenterOfTile(yTile) - dynamicEntity.getCenter().getY()) < MAX_CENTER_DISTANCE) {
-      if (dynamicEntity instanceof GhostImpl) {
-        System.out.println(((GhostImpl) dynamicEntity).getPossibleDirections());
-      }
       String aboveCoordinates = formatCoordinates(xTile, yTile - 1);
       if (isWall.get(aboveCoordinates) == null) {
         possibleDirections.add(Direction.UP);

@@ -5,6 +5,7 @@ import pacman.ConfigurationParseException;
 import pacman.model.entity.Renderable;
 import pacman.model.entity.dynamic.DynamicEntity;
 import pacman.model.entity.dynamic.ghost.Ghost;
+import pacman.model.entity.dynamic.ghost.GhostImpl;
 import pacman.model.entity.dynamic.ghost.GhostMode;
 import pacman.model.entity.dynamic.physics.PhysicsEngine;
 import pacman.model.entity.dynamic.player.Controllable;
@@ -90,6 +91,18 @@ public class LevelImpl implements Level {
 
   @Override
   public void tick() {
+      if (tickCount == modeLengths.get(currentGhostMode)) {
+
+          // update ghost mode
+          this.currentGhostMode = GhostMode.getNextGhostMode(currentGhostMode);
+          for (Ghost ghost : this.ghosts) {
+              ghost.setGhostMode(this.currentGhostMode);
+          }
+
+          tickCount = 0;
+      }
+
+
     if (tickCount % Pacman.PACMAN_IMAGE_SWAP_TICK_COUNT == 0) {
       this.player.switchImage();
     }
