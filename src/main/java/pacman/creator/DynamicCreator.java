@@ -25,11 +25,8 @@ public class DynamicCreator extends EntityCreator {
         corners = new HashMap<>();
         initCorner();
         pacmanVisuals = new HashMap<>();
-
-
-
+        initPacManVisuals();
     }
-
     public Renderable createRenderableObject(int x, int y, char rendererSymbol) {
         BoundingBoxImpl boundingBox = getBoundingBoxOfObject(x, y-4);
         KinematicStateImpl kinematicState = new KinematicStateImpl.KinematicStateBuilder()
@@ -43,12 +40,14 @@ public class DynamicCreator extends EntityCreator {
         return new Pacman(pacmanVisuals.get(PacmanVisual.CLOSED), pacmanVisuals, boundingBox, kinematicState);
     }
 
+
     private void initCorner() {
         corners.put(0, new Vector2D(16, 64));
         corners.put(1, new Vector2D(26 * 16, 64));
         corners.put(2, new Vector2D(16, 32 * 16));
         corners.put(3, new Vector2D(26 * 16, 32 * 16));
     }
+
 
     private void initPacManVisuals() {
         pacmanVisuals.put(PacmanVisual.UP, new Image(getClass().getResource("/maze/pacman/playerUp.png").toExternalForm()));
