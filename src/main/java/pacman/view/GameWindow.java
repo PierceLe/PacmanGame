@@ -10,10 +10,6 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import pacman.model.engine.GameEngine;
 import pacman.model.entity.Renderable;
-import pacman.observer.LivesObserver;
-import pacman.observer.LivesSubject;
-import pacman.observer.ScoreObserver;
-import pacman.observer.ScoreSubject;
 import pacman.view.background.BackgroundDrawer;
 import pacman.view.background.StandardBackgroundDrawer;
 import pacman.view.entity.EntityView;
@@ -57,13 +53,6 @@ public class GameWindow {
     scoreLabel.setLayoutY(10);
     scoreLabel.setStyle("-fx-text-fill: white");
     pane.getChildren().add(scoreLabel);
-
-    // Create a score observer
-    ScoreObserver scoreObserver = newScore -> {
-      scoreLabel.setText("Score: " + newScore); // Update score label
-    };
-    ((ScoreSubject) model.getPacman()).registerObserver(scoreObserver);
-
     // Add the game over label to the pane
     for (int i = 0; i < numLives; i++) {
       ImageView livesImageView = new ImageView("/maze/pacman/playerRight.png");
@@ -103,18 +92,6 @@ public class GameWindow {
     timeline.play();
 
     model.startGame();
-
-    // Create a lives observer
-    LivesObserver livesObserver = newLives -> {
-      for (int i = 0; i < numLives; i++) {
-        livesImageViews.get(i).setVisible(i < newLives);
-      }
-
-      if (newLives == 0) {
-        gameOverLabel.setVisible(true);
-      }
-    };
-    ((LivesSubject) model.getLevelImpl()).registerObserver(livesObserver);
   }
 
   private void draw() {

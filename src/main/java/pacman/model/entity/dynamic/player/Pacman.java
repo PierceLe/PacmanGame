@@ -3,14 +3,12 @@ package pacman.model.entity.dynamic.player;
 import javafx.scene.image.Image;
 import pacman.model.entity.Renderable;
 import pacman.model.entity.dynamic.physics.*;
-import pacman.observer.ScoreObserver;
-import pacman.observer.ScoreSubject;
 import pacman.model.entity.staticentity.collectable.Collectable;
 import pacman.model.level.Level;
 
 import java.util.*;
 
-public class Pacman implements Controllable, ScoreSubject {
+public class Pacman implements Controllable {
 
   public static final int PACMAN_IMAGE_SWAP_TICK_COUNT = 8;
   private final Layer layer = Layer.FOREGROUND;
@@ -23,7 +21,6 @@ public class Pacman implements Controllable, ScoreSubject {
   private boolean isClosedImage;
 
   private int score = 0;
-  private final List<ScoreObserver> scoreObservers;
 
   public Pacman(
       Image currentImage,
@@ -38,7 +35,6 @@ public class Pacman implements Controllable, ScoreSubject {
     this.startingPosition = kinematicState.getPosition();
     this.possibleDirections = new HashSet<>();
     this.isClosedImage = false;
-    this.scoreObservers = new ArrayList<>();
   }
 
   @Override
@@ -113,7 +109,6 @@ public class Pacman implements Controllable, ScoreSubject {
 
       // Update score
       score += collectable.getPoints();
-      notifyObservers(); // notify observers of score change
     }
   }
 
@@ -166,22 +161,5 @@ public class Pacman implements Controllable, ScoreSubject {
   @Override
   public void switchImage() {
     this.isClosedImage = !this.isClosedImage;
-  }
-
-  @Override
-  public void registerObserver(ScoreObserver scoreObserver) {
-    scoreObservers.add(scoreObserver);
-  }
-
-  @Override
-  public void removeObserver(ScoreObserver scoreObserver) {
-    scoreObservers.remove(scoreObserver);
-  }
-
-  @Override
-  public void notifyObservers() {
-    for (ScoreObserver scoreObserver : scoreObservers) {
-      scoreObserver.updateObserver(score);
-    }
   }
 }
