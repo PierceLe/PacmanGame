@@ -17,7 +17,7 @@ public abstract class EntityCreator {
     protected BoundingBoxImpl getBoundingBoxOfObject(int x, int y) {
         Double imageWidth = image.getWidth();
         Double imageHeight = image.getHeight();
-        Vector2D topLeftCorner = new Vector2D(x + 8 - imageWidth/2, y + 8 - imageHeight/2 );
+        Vector2D topLeftCorner = new Vector2D(x , y);
         return new BoundingBoxImpl(topLeftCorner, imageHeight, imageWidth);
     }
 

@@ -25,6 +25,7 @@ public class GhostImpl implements Ghost {
     private Set<Direction> possibleDirections;
     private Vector2D playerPosition;
     private Map<GhostMode, Double> speeds;
+    private boolean isFirstReset = true;
 
     public GhostImpl(Image image, BoundingBox boundingBox, KinematicState kinematicState, GhostMode ghostMode, Vector2D targetCorner, Direction currentDirection) {
         this.image = image;
@@ -151,9 +152,16 @@ public class GhostImpl implements Ghost {
     @Override
     public void reset() {
         // return ghost to starting position
-        this.kinematicState = new KinematicStateImpl.KinematicStateBuilder()
+        if (isFirstReset) {
+            this.kinematicState = new KinematicStateImpl.KinematicStateBuilder()
                 .setPosition(startingPosition)
                 .build();
+          this.kinematicState.left();
+          isFirstReset = false;
+        } else {
+            this.kinematicState.setPosition(startingPosition);
+            this.kinematicState.left();
+        }
     }
 
     @Override

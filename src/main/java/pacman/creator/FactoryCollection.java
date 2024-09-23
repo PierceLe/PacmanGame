@@ -7,31 +7,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FactoryCollection {
-    // Static instance of the singleton class
-    private static FactoryCollection instance;
+    private Map<Character, EntityCreator> factories;
+    private HashMap<Character, Image> images;
 
-    private final Map<Character, EntityCreator> factories;
-    private final HashMap<Character, Image> images;
-
-    // Private constructor to prevent instantiation
-    private FactoryCollection() {
+    public FactoryCollection() {
         images = new HashMap<>();
         initImages();
         factories = new HashMap<>();
         initEntities();
     }
 
-    // Public method to provide access to the single instance
-    public static FactoryCollection getInstance() {
-        if (instance == null) {
-            synchronized (FactoryCollection.class) {
-                if (instance == null) {
-                    instance = new FactoryCollection();
-                }
-            }
-        }
-        return instance;
-    }
 
     private void initImages() {
         images.put(RenderableType.PATH, null);
@@ -66,4 +51,9 @@ public class FactoryCollection {
     private void registerEntityCreator(char renderableType, EntityCreator creator) {
         factories.put(renderableType, creator);
     }
+
+
+
+
+
 }
