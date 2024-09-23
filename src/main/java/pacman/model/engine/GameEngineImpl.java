@@ -84,5 +84,15 @@ public class GameEngineImpl implements GameEngine {
         currentLevel.tick();
     }
 
+    @Override
+    public Renderable getPacman() {
+        return this.maze.getControllable();
+    }
+
+    @Override
+    public LevelImpl getLevelImpl() {
+        return (LevelImpl) this.currentLevel;
+    }
+
 }
 

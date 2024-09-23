@@ -12,13 +12,12 @@ import pacman.model.entity.dynamic.player.Pacman;
 import pacman.model.entity.dynamic.player.PacmanVisual;
 import pacman.model.maze.RenderableType;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class DynamicCreator extends EntityCreator {
     Map<Integer, Vector2D> corners;
     Map<PacmanVisual, Image> pacmanVisuals;
+    Set<Integer> cornerSet = new HashSet<>();
 
     public DynamicCreator(Image image) {
         super(image);
@@ -28,23 +27,25 @@ public class DynamicCreator extends EntityCreator {
         initPacManVisuals();
     }
     public Renderable createRenderableObject(int x, int y, char rendererSymbol) {
-        BoundingBoxImpl boundingBox = getBoundingBoxOfObject(x, y);
+        BoundingBoxImpl boundingBox = getBoundingBoxOfObject(x, y - 4);
         KinematicStateImpl kinematicState = new KinematicStateImpl.KinematicStateBuilder()
-                .setPosition(new Vector2D(boundingBox.getLeftX(), boundingBox.getTopY())).build();
+            .setPosition(new Vector2D(boundingBox.getLeftX(), boundingBox.getTopY())).build();
+
         if (rendererSymbol == RenderableType.GHOST) {
             Random random = new Random();
             int randomNum = random.nextInt(4);
+            randomNum = 0;
             Vector2D targetCorner = corners.get(randomNum);
-            return new GhostImpl(super.image, boundingBox, kinematicState, GhostMode.SCATTER, targetCorner, Direction.values()[random.nextInt(4)]);
+          return new GhostImpl(super.image, boundingBox, kinematicState, GhostMode.SCATTER, targetCorner, Direction.values()[random.nextInt(4)]);
         }
         return new Pacman(pacmanVisuals.get(PacmanVisual.CLOSED), pacmanVisuals, boundingBox, kinematicState);
     }
 
 
     private void initCorner() {
-        corners.put(0, new Vector2D(16, 64));
-        corners.put(1, new Vector2D(26 * 16, 64));
-        corners.put(2, new Vector2D(16, 32 * 16));
+        corners.put(0, new Vector2D(0, 0));
+        corners.put(1, new Vector2D(26 * 16, 0));
+        corners.put(2, new Vector2D(0, 32 * 16));
         corners.put(3, new Vector2D(26 * 16, 32 * 16));
     }
 

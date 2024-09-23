@@ -1,6 +1,9 @@
 package pacman.model.engine;
 
 import pacman.model.entity.Renderable;
+import pacman.model.entity.dynamic.player.Pacman;
+import pacman.model.level.Level;
+
 import java.util.List;
 
 
@@ -9,41 +12,45 @@ import java.util.List;
  */
 public interface GameEngine {
 
-    /**
-     * Gets the list of renderables in the game
-     *
-     * @return The list of renderables
-     */
-    List<Renderable> getRenderables();
+  /**
+   * Gets the list of renderables in the game
+   *
+   * @return The list of renderables
+   */
+  List<Renderable> getRenderables();
 
-    /**
-     * Starts the game
-     */
-    void startGame();
+  /**
+   * Starts the game
+   */
+  void startGame();
 
 
-    /**
-     * Move the player up
-     */
-    void moveUp();
+  /**
+   * Move the player up
+   */
+  void moveUp();
 
-    /**
-     * Move the player down
-     */
-    void moveDown();
+  /**
+   * Move the player down
+   */
+  void moveDown();
 
-    /**
-     * Move the player left
-     */
-    void moveLeft();
+  /**
+   * Move the player left
+   */
+  void moveLeft();
 
-    /**
-     * Move the player right
-     */
-    void moveRight();
+  /**
+   * Move the player right
+   */
+  void moveRight();
 
-    /**
-     * Instruct the model to progress forward in time by one increment.
-     */
-    void tick();
+  /**
+   * Instruct the model to progress forward in time by one increment.
+   */
+  void tick();
+
+  Renderable getPacman();
+
+  Object getLevelImpl();
 }
