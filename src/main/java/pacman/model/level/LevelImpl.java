@@ -12,8 +12,6 @@ import pacman.model.entity.dynamic.player.Pacman;
 import pacman.model.entity.staticentity.StaticEntity;
 import pacman.model.entity.staticentity.collectable.Collectable;
 import pacman.model.maze.Maze;
-import pacman.observer.LivesObserver;
-import pacman.observer.LivesSubject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,11 +22,10 @@ import java.util.stream.Collectors;
 /**
  * Concrete implement of Pac-Man level
  */
-public class LevelImpl implements Level, LivesSubject {
+public class LevelImpl implements Level {
 
   private static final int START_LEVEL_TIME = 200;
   private final Maze maze;
-  private final List<LivesObserver> livesObserveas;
   private List<Renderable> renderables;
   private Controllable player;
   private List<Ghost> ghosts;
@@ -45,7 +42,6 @@ public class LevelImpl implements Level, LivesSubject {
     this.tickCount = 0;
     this.modeLengths = new HashMap<>();
     this.currentGhostMode = GhostMode.SCATTER;
-    this.livesObserveas = new ArrayList<>();
     initLevel(new LevelConfigurationReader(levelConfiguration));
   }
 
@@ -186,8 +182,6 @@ public class LevelImpl implements Level, LivesSubject {
     } else {
       handleGameEnd();
     }
-
-    notifyObservers();
   }
 
   @Override
@@ -200,22 +194,5 @@ public class LevelImpl implements Level, LivesSubject {
 
   @Override
   public void collect(Collectable collectable) {
-  }
-
-  @Override
-  public void registerObserver(LivesObserver livesObserver) {
-    livesObserveas.add(livesObserver);
-  }
-
-  @Override
-  public void removeObserver(LivesObserver livesObserver) {
-    livesObserveas.remove(livesObserver);
-  }
-
-  @Override
-  public void notifyObservers() {
-    for (LivesObserver livesObserver : livesObserveas) {
-      livesObserver.updateLives(getNumLives());
-    }
   }
 }

@@ -20,7 +20,7 @@ public class EntityViewImpl implements EntityView {
         box = new HBox();
         node = new ImageView(entity.getImage());
 
-        //box.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, null , null)));
+//        box.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, null , null)));
 
         box.getChildren().add(node);
         box.setViewOrder(getViewOrder(entity.getLayer()));
