@@ -1,4 +1,22 @@
 package pacman.view.keyboard.command;
 
-public class ConcreteRightCommand {
+import pacman.model.entity.dynamic.physics.Direction;
+import pacman.model.entity.dynamic.player.Controllable;
+
+public class ConcreteRightCommand implements Command {
+    private Controllable pacman;
+
+    public ConcreteRightCommand(Controllable pacman) {
+        this.pacman = pacman;
+    }
+
+    public void execute() {
+        if (pacman.isValidMove(Direction.RIGHT)) {
+            pacman.down();
+        }
+        else {
+            pacman.setLastDirection(Direction.RIGHT);
+        }
+    }
+
 }
