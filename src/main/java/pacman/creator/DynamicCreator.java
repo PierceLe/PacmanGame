@@ -28,12 +28,12 @@ public class DynamicCreator extends EntityCreator {
         initPacManVisuals();
     }
     public Renderable createRenderableObject(int x, int y, char rendererSymbol) {
-        BoundingBoxImpl boundingBox = getBoundingBoxOfObject(x, y-4);
+        BoundingBoxImpl boundingBox = getBoundingBoxOfObject(x, y);
         KinematicStateImpl kinematicState = new KinematicStateImpl.KinematicStateBuilder()
                 .setPosition(new Vector2D(boundingBox.getLeftX(), boundingBox.getTopY())).build();
         if (rendererSymbol == RenderableType.GHOST) {
             Random random = new Random();
-            int randomNum = 0;
+            int randomNum = random.nextInt(4);
             Vector2D targetCorner = corners.get(randomNum);
             return new GhostImpl(super.image, boundingBox, kinematicState, GhostMode.SCATTER, targetCorner, Direction.values()[random.nextInt(4)]);
         }

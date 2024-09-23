@@ -7,16 +7,31 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FactoryCollection {
-    private Map<Character, EntityCreator> factories;
-    private HashMap<Character, Image> images;
+    // Static instance of the singleton class
+    private static FactoryCollection instance;
 
-    public FactoryCollection() {
+    private final Map<Character, EntityCreator> factories;
+    private final HashMap<Character, Image> images;
+
+    // Private constructor to prevent instantiation
+    private FactoryCollection() {
         images = new HashMap<>();
         initImages();
         factories = new HashMap<>();
         initEntities();
     }
 
+    // Public method to provide access to the single instance
+    public static FactoryCollection getInstance() {
+        if (instance == null) {
+            synchronized (FactoryCollection.class) {
+                if (instance == null) {
+                    instance = new FactoryCollection();
+                }
+            }
+        }
+        return instance;
+    }
 
     private void initImages() {
         images.put(RenderableType.PATH, null);
@@ -32,7 +47,7 @@ public class FactoryCollection {
     }
 
     private void initEntities() {
-        registerEntityCreator('0', new StaticEntityCreator(null));
+        registerEntityCreator('0', new StaticEntityCreator(images.get(RenderableType.PATH)));
         registerEntityCreator('1', new StaticEntityCreator(images.get(RenderableType.HORIZONTAL_WALL)));
         registerEntityCreator('2', new StaticEntityCreator(images.get(RenderableType.VERTICAL_WALL)));
         registerEntityCreator('3', new StaticEntityCreator(images.get(RenderableType.UP_LEFT_WALL)));
@@ -51,9 +66,4 @@ public class FactoryCollection {
     private void registerEntityCreator(char renderableType, EntityCreator creator) {
         factories.put(renderableType, creator);
     }
-
-
-
-
-
 }
