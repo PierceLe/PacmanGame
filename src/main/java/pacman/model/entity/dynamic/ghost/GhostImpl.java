@@ -71,6 +71,7 @@ public class GhostImpl implements Ghost {
     }
 
     private Vector2D getTargetLocation() {
+        System.out.println(this.ghostMode);
         return switch (this.ghostMode) {
             // how does Ghost get the Player's position ??
             case CHASE -> this.playerPosition;
@@ -181,9 +182,5 @@ public class GhostImpl implements Ghost {
 
     public void setPlayerPosition(Vector2D playerPosition) {
         this.playerPosition = playerPosition;
-    }
-
-    public Set<Direction> getPossibleDirections() {
-        return possibleDirections;
     }
 }

@@ -34,7 +34,6 @@ public class DynamicCreator extends EntityCreator {
         if (rendererSymbol == RenderableType.GHOST) {
             Random random = new Random();
             int randomNum = random.nextInt(4);
-//            randomNum = 0;
             Vector2D targetCorner = corners.get(randomNum);
           return new GhostImpl(super.image, boundingBox, kinematicState, GhostMode.SCATTER, targetCorner, Direction.values()[random.nextInt(4)]);
         }
