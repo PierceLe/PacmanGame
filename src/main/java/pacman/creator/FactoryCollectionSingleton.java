@@ -6,17 +6,30 @@ import pacman.model.maze.RenderableType;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FactoryCollection {
+public class FactoryCollectionSingleton {
+    private static FactoryCollectionSingleton instance;  // Static instance for Singleton
     private Map<Character, EntityCreator> factories;
     private HashMap<Character, Image> images;
 
-    public FactoryCollection() {
+    // Private constructor to prevent instantiation
+    private FactoryCollectionSingleton() {
         images = new HashMap<>();
         initImages();
         factories = new HashMap<>();
         initEntities();
     }
 
+    // Public static method to get the single instance
+    public static FactoryCollectionSingleton getInstance() {
+        if (instance == null) {
+            synchronized (FactoryCollectionSingleton.class) {
+                if (instance == null) {
+                    instance = new FactoryCollectionSingleton();
+                }
+            }
+        }
+        return instance;
+    }
 
     private void initImages() {
         images.put(RenderableType.PATH, null);
@@ -51,9 +64,4 @@ public class FactoryCollection {
     private void registerEntityCreator(char renderableType, EntityCreator creator) {
         factories.put(renderableType, creator);
     }
-
-
-
-
-
 }
