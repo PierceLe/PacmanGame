@@ -17,14 +17,17 @@ import java.util.Map;
 import java.util.Random;
 
 public class DynamicCreator extends EntityCreator {
-    Map<Integer, Vector2D> corners = new HashMap<>();
+    Map<Integer, Vector2D> corners;
+    Map<PacmanVisual, Image> pacmanVisuals;
 
     public DynamicCreator(Image image) {
         super(image);
-        corners.put(1, new Vector2D(16, 64));
-        corners.put(2, new Vector2D(26 * 16, 64));
-        corners.put(3, new Vector2D(16, 32 * 16));
-        corners.put(4, new Vector2D(26 * 16, 32 * 16));
+        corners = new HashMap<>();
+        initCorner();
+        pacmanVisuals = new HashMap<>();
+
+
+
     }
 
     public Renderable createRenderableObject(int x, int y, char rendererSymbol) {
@@ -33,16 +36,25 @@ public class DynamicCreator extends EntityCreator {
                 .setPosition(new Vector2D(boundingBox.getLeftX(), boundingBox.getTopY())).build();
         if (rendererSymbol == RenderableType.GHOST) {
             Random random = new Random();
-            int randomNum = 1;
+            int randomNum = 0;
             Vector2D targetCorner = corners.get(randomNum);
             return new GhostImpl(super.image, boundingBox, kinematicState, GhostMode.SCATTER, targetCorner, Direction.values()[random.nextInt(4)]);
         }
-        Map<PacmanVisual, Image> pacmanVisuals = new HashMap<PacmanVisual, Image>();
+        return new Pacman(pacmanVisuals.get(PacmanVisual.CLOSED), pacmanVisuals, boundingBox, kinematicState);
+    }
+
+    private void initCorner() {
+        corners.put(0, new Vector2D(16, 64));
+        corners.put(1, new Vector2D(26 * 16, 64));
+        corners.put(2, new Vector2D(16, 32 * 16));
+        corners.put(3, new Vector2D(26 * 16, 32 * 16));
+    }
+
+    private void initPacManVisuals() {
         pacmanVisuals.put(PacmanVisual.UP, new Image(getClass().getResource("/maze/pacman/playerUp.png").toExternalForm()));
         pacmanVisuals.put(PacmanVisual.CLOSED, new Image(getClass().getResource("/maze/pacman/playerClosed.png").toExternalForm()));
         pacmanVisuals.put(PacmanVisual.DOWN, new Image(getClass().getResource("/maze/pacman/playerDown.png").toExternalForm()));
         pacmanVisuals.put(PacmanVisual.LEFT, new Image(getClass().getResource("/maze/pacman/playerLeft.png").toExternalForm()));
         pacmanVisuals.put(PacmanVisual.RIGHT, new Image(getClass().getResource("/maze/pacman/playerRight.png").toExternalForm()));
-        return new Pacman(pacmanVisuals.get(PacmanVisual.CLOSED), pacmanVisuals, boundingBox, kinematicState);
     }
 }
