@@ -170,4 +170,12 @@ public class GhostImpl implements Ghost {
     public Vector2D getCenter() {
         return new Vector2D(boundingBox.getMiddleX(), boundingBox.getMiddleY());
     }
+
+    public void setPlayerPosition(Vector2D playerPosition) {
+        this.playerPosition = playerPosition;
+    }
+
+    public Set<Direction> getPossibleDirections() {
+        return possibleDirections;
+    }
 }

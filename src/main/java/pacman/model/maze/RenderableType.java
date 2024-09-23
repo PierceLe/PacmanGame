@@ -4,6 +4,7 @@ package pacman.model.maze;
  * Mapping of characters used in map text files to renderable type
  */
 public interface RenderableType {
+    char PATH = '0';
     char HORIZONTAL_WALL = '1';
     char VERTICAL_WALL = '2';
     char UP_LEFT_WALL = '3';

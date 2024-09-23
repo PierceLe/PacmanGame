@@ -1,10 +1,12 @@
 package pacman.model.entity.dynamic.physics;
 
+import pacman.model.entity.dynamic.DynamicEntity;
+
 /**
  * Standard implementation of an BoundingBox, with O(1) time
  * collidesWith and containsPoint implementations.
  */
-public class BoundingBoxImpl implements BoundingBox {
+public class BoundingBoxImpl implements BoundingBox{
     private final double width;
     private final double height;
     private Vector2D topLeft;

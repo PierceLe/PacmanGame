@@ -11,7 +11,7 @@ public class StaticEntityImpl implements Renderable, StaticEntity {
     private final BoundingBox boundingBox;
     private Layer layer;
 
-    public StaticEntityImpl(BoundingBox boundingBox, Layer layer, Image image){
+    public StaticEntityImpl(BoundingBox boundingBox, Layer layer, Image image) {
         this.image = image;
         this.layer = layer;
         this.boundingBox = boundingBox;
