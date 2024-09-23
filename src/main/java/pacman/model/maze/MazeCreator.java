@@ -42,7 +42,7 @@ public class MazeCreator {
                      */
                     FactoryCollection factoryCollection = new FactoryCollection();
                     EntityCreator entityCreator = factoryCollection.getEntityCreator(row[x]);
-                    Renderable renderable = entityCreator == null ? null : entityCreator.createRenderableObject(x, y, row[x]);
+                    Renderable renderable = entityCreator == null ? null : entityCreator.createRenderableObject(x * 16, y * 16, row[x]);
                     maze.addRenderable(renderable, row[x], x, y);
                 }
                 y += 1;

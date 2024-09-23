@@ -17,25 +17,25 @@ import java.util.Map;
 import java.util.Random;
 
 public class DynamicCreator extends EntityCreator {
+    Map<Integer, Vector2D> corners = new HashMap<>();
+
     public DynamicCreator(Image image) {
         super(image);
+        corners.put(1, new Vector2D(16, 64));
+        corners.put(2, new Vector2D(26 * 16, 64));
+        corners.put(3, new Vector2D(16, 32 * 16));
+        corners.put(4, new Vector2D(26 * 16, 32 * 16));
     }
 
     public Renderable createRenderableObject(int x, int y, char rendererSymbol) {
-        System.out.println(rendererSymbol);
-        BoundingBoxImpl boundingBox = getBoundingBoxOfObject(x, y);
+        BoundingBoxImpl boundingBox = getBoundingBoxOfObject(x, y-4);
         KinematicStateImpl kinematicState = new KinematicStateImpl.KinematicStateBuilder()
                 .setPosition(new Vector2D(boundingBox.getLeftX(), boundingBox.getTopY())).build();
         if (rendererSymbol == RenderableType.GHOST) {
-            Map<Integer, Vector2D> corners = new HashMap<>();
-            corners.put(1, new Vector2D(0, 0));
-            corners.put(2, new Vector2D(28, 28));
-            corners.put(3, new Vector2D(0, 28));
-            corners.put(4, new Vector2D(28, 0));
             Random random = new Random();
-            int randomNum = random.nextInt(4) + 1;
+            int randomNum = 1;
             Vector2D targetCorner = corners.get(randomNum);
-            return new GhostImpl(super.image, boundingBox, kinematicState, GhostMode.SCATTER, targetCorner, Direction.LEFT);
+            return new GhostImpl(super.image, boundingBox, kinematicState, GhostMode.SCATTER, targetCorner, Direction.values()[random.nextInt(4)]);
         }
         Map<PacmanVisual, Image> pacmanVisuals = new HashMap<PacmanVisual, Image>();
         pacmanVisuals.put(PacmanVisual.UP, new Image(getClass().getResource("/maze/pacman/playerUp.png").toExternalForm()));

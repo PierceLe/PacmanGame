@@ -2,7 +2,9 @@ package pacman.model.maze;
 
 import pacman.model.entity.dynamic.DynamicEntity;
 import pacman.model.entity.Renderable;
+import pacman.model.entity.dynamic.ghost.GhostImpl;
 import pacman.model.entity.dynamic.physics.Direction;
+import pacman.model.entity.dynamic.player.Pacman;
 
 import java.util.*;
 
@@ -42,7 +44,9 @@ public class Maze {
                 this.ghosts.add(renderable);
             } else if (renderableType == RenderableType.PELLET){
                 this.pellets.add(renderable);
-            } else {
+            } else if (renderableType == RenderableType.PATH) {
+
+            }else {
                 this.isWall.put(formatCoordinates(x, y), true);
             }
 
@@ -86,7 +90,9 @@ public class Maze {
         // calculates whether entity is in a position where it is able to turn
         if (Math.abs(getCenterOfTile(xTile) - dynamicEntity.getCenter().getX()) < MAX_CENTER_DISTANCE &&
                 Math.abs(getCenterOfTile(yTile) - dynamicEntity.getCenter().getY()) < MAX_CENTER_DISTANCE){
-
+            if(dynamicEntity instanceof GhostImpl){
+                System.out.println(((GhostImpl) dynamicEntity).getPossibleDirections());
+            }
             String aboveCoordinates = formatCoordinates(xTile, yTile - 1);
             if (isWall.get(aboveCoordinates) == null){
                 possibleDirections.add(Direction.UP);

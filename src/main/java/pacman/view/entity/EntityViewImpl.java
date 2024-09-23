@@ -3,6 +3,7 @@ package pacman.view.entity;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import pacman.model.entity.Renderable;
 
 /**
@@ -18,6 +19,9 @@ public class EntityViewImpl implements EntityView {
         this.entity = entity;
         box = new HBox();
         node = new ImageView(entity.getImage());
+
+        //box.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, null , null)));
+
         box.getChildren().add(node);
         box.setViewOrder(getViewOrder(entity.getLayer()));
         box.setFillHeight(true);
@@ -37,7 +41,7 @@ public class EntityViewImpl implements EntityView {
     public void update() {
         if (entity.getLayer() != Renderable.Layer.INVISIBLE) {
             node.setVisible(true);
-            if (!node.getImage().equals(entity.getImage())) {
+            if (node.getImage() != null && !node.getImage().equals(entity.getImage())) {
                 node.setImage(entity.getImage());
             }
             box.setLayoutX(entity.getPosition().getX());

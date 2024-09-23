@@ -88,16 +88,16 @@ public class LevelImpl implements Level {
 
     @Override
     public void tick() {
-        if (tickCount == modeLengths.get(currentGhostMode)) {
-
-            // update ghost mode
-            this.currentGhostMode = GhostMode.getNextGhostMode(currentGhostMode);
-            for (Ghost ghost : this.ghosts) {
-                ghost.setGhostMode(this.currentGhostMode);
-            }
-
-            tickCount = 0;
-        }
+//        if (tickCount == modeLengths.get(currentGhostMode)) {
+//
+//            // update ghost mode
+//            this.currentGhostMode = GhostMode.getNextGhostMode(currentGhostMode);
+//            for (Ghost ghost : this.ghosts) {
+//                ghost.setGhostMode(this.currentGhostMode);
+//            }
+//
+//            tickCount = 0;
+//        }
 
         if (tickCount % Pacman.PACMAN_IMAGE_SWAP_TICK_COUNT == 0) {
             this.player.switchImage();
@@ -108,6 +108,9 @@ public class LevelImpl implements Level {
         for (DynamicEntity dynamicEntity : dynamicEntities) {
             maze.updatePossibleDirections(dynamicEntity);
             dynamicEntity.update();
+        }
+        for (Ghost ghost : this.ghosts) {
+            ghost.setPlayerPosition(player.getPosition());
         }
 
         for (int i = 0; i < dynamicEntities.size(); ++i) {

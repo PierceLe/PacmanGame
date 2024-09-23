@@ -19,6 +19,7 @@ public class FactoryCollection {
 
 
     private void initImages() {
+        images.put(RenderableType.PATH, null);
         images.put(RenderableType.HORIZONTAL_WALL, new Image(getClass().getResource("/maze/walls/horizontal.png").toExternalForm()));
         images.put(RenderableType.VERTICAL_WALL, new Image(getClass().getResource("/maze/walls/vertical.png").toExternalForm()));
         images.put(RenderableType.UP_LEFT_WALL, new Image(getClass().getResource("/maze/walls/upLeft.png").toExternalForm()));
@@ -31,6 +32,7 @@ public class FactoryCollection {
     }
 
     private void initEntities() {
+        registerEntityCreator('0', new StaticEntityCreator(null));
         registerEntityCreator('1', new StaticEntityCreator(images.get(RenderableType.HORIZONTAL_WALL)));
         registerEntityCreator('2', new StaticEntityCreator(images.get(RenderableType.VERTICAL_WALL)));
         registerEntityCreator('3', new StaticEntityCreator(images.get(RenderableType.UP_LEFT_WALL)));
