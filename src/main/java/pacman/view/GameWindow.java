@@ -7,16 +7,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 import pacman.model.engine.GameEngine;
 import pacman.model.entity.Renderable;
-import pacman.model.entity.dynamic.player.Pacman;
 import pacman.view.background.BackgroundDrawer;
 import pacman.view.background.StandardBackgroundDrawer;
 import pacman.view.entity.EntityView;
 import pacman.view.entity.EntityViewImpl;
 import pacman.view.keyboard.KeyboardInputHandler;
-import javafx.geometry.Pos;
+import pacman.view.observer.LivesObserver;
+import pacman.view.observer.LivesSubject;
+import pacman.view.observer.ScoreObserver;
+import pacman.view.observer.ScoreSubject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -25,7 +28,7 @@ import java.util.List;
 /**
  * Responsible for managing the Pac-Man Game View
  */
-public class GameWindow {
+public class GameWindow implements ScoreObserver, LivesObserver {
 
   public static final File FONT_FILE = new File("src/main/resources/maze/PressStart2P-Regular.ttf");
 
@@ -42,8 +45,11 @@ public class GameWindow {
   public GameWindow(GameEngine model, int width, int height) {
     this.model = model;
 
+    // Create a score observer
+    ((ScoreSubject) model.getPacman()).registerObserver(this);
+
     //init score label
-    scoreLabel = new Label("Score: " + 123);
+    scoreLabel = new Label("Score: 0");
     pane = new Pane();
     scene = new Scene(pane, width, height);
 
@@ -53,7 +59,11 @@ public class GameWindow {
     scoreLabel.setLayoutX(10);
     scoreLabel.setLayoutY(10);
     scoreLabel.setStyle("-fx-text-fill: white");
+    // set font FONT_FILE
+    scoreLabel.setFont(Font.loadFont("file:" + FONT_FILE.getAbsolutePath(), 24));
+
     pane.getChildren().add(scoreLabel);
+
     // Add the game over label to the pane
     for (int i = 0; i < numLives; i++) {
       ImageView livesImageView = new ImageView("/maze/pacman/playerRight.png");
@@ -66,10 +76,12 @@ public class GameWindow {
     }
 
     // Add the game over label to the pane
-    gameOverLabel.setStyle("-fx-text-fill: red; -fx-font-size: 24;");
+    gameOverLabel.setStyle("-fx-text-fill: red;");
     gameOverLabel.setVisible(false);
     Platform.runLater(() -> {
-      gameOverLabel.setLayoutX(scene.getWidth() / 2 - gameOverLabel.getWidth() / 2);
+      // set font FONT_FILE
+      gameOverLabel.setFont(Font.loadFont("file:" + FONT_FILE.getAbsolutePath(), 0));
+      gameOverLabel.setLayoutX(scene.getWidth() / 2 - gameOverLabel.getWidth() / 2 - 20); // Cách vị trí trung tâm 20px
       gameOverLabel.setLayoutY(scene.getHeight() / 2 - gameOverLabel.getHeight() / 2 + 40); // Cách vị trí trung tâm 20px
     });
     pane.getChildren().add(gameOverLabel);
@@ -87,12 +99,15 @@ public class GameWindow {
 
   public void run() {
     Timeline timeline = new Timeline(new KeyFrame(Duration.millis(34),
-        t -> this.draw()));
+            t -> this.draw()));
 
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
 
     model.startGame();
+
+    // Create a lives observer
+    ((LivesSubject) model.getLevelImpl()).registerObserver(this);
   }
 
   private void draw() {
@@ -127,5 +142,21 @@ public class GameWindow {
     }
 
     entityViews.removeIf(EntityView::isMarkedForDelete);
+  }
+
+  @Override
+  public void updateLives(int lives) {
+    for (int i = 0; i < numLives; i++) {
+      livesImageViews.get(i).setVisible(i < lives);
+    }
+
+    if (lives == 0) {
+      gameOverLabel.setVisible(true);
+    }
+  }
+
+  @Override
+  public void updateScore(int newScore) {
+    scoreLabel.setText("Score: " + newScore);
   }
 }

@@ -5,10 +5,12 @@ import pacman.model.entity.Renderable;
 import pacman.model.entity.dynamic.physics.*;
 import pacman.model.entity.staticentity.collectable.Collectable;
 import pacman.model.level.Level;
+import pacman.view.observer.ScoreObserver;
+import pacman.view.observer.ScoreSubject;
 
 import java.util.*;
 
-public class Pacman implements Controllable {
+public class Pacman implements Controllable, ScoreSubject {
 
   public static final int PACMAN_IMAGE_SWAP_TICK_COUNT = 8;
   private final Layer layer = Layer.FOREGROUND;
@@ -22,6 +24,7 @@ public class Pacman implements Controllable {
   private Direction lastDirection;
 
   private int score = 0;
+  private final List<ScoreObserver> scoreObservers;
 
   public Pacman(
       Image currentImage,
@@ -36,6 +39,7 @@ public class Pacman implements Controllable {
     this.startingPosition = kinematicState.getPosition();
     this.possibleDirections = new HashSet<>();
     this.isClosedImage = false;
+    scoreObservers = new ArrayList<>();
   }
 
   @Override
@@ -130,6 +134,7 @@ public class Pacman implements Controllable {
 
       // Update score
       score += collectable.getPoints();
+      notifyObservers();
     }
   }
 
@@ -194,5 +199,22 @@ public class Pacman implements Controllable {
 
   public Direction getLastDirection() {
     return lastDirection;
+  }
+
+  @Override
+  public void registerObserver(ScoreObserver scoreObserver) {
+    scoreObservers.add(scoreObserver);
+  }
+
+  @Override
+  public void removeObserver(ScoreObserver scoreObserver) {
+    scoreObservers.remove(scoreObserver);
+  }
+
+  @Override
+  public void notifyObservers() {
+    for (ScoreObserver scoreObserver : scoreObservers) {
+      scoreObserver.updateScore(score);
+    }
   }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * The base interface for interacting with the Pac-Man model
  */
-public interface GameEngine {
+public interface GameEngine{
 
   /**
    * Gets the list of renderables in the game
