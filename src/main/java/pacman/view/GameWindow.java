@@ -10,13 +10,13 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import pacman.model.engine.GameEngine;
 import pacman.model.entity.Renderable;
-import pacman.model.entity.dynamic.player.Pacman;
 import pacman.view.background.BackgroundDrawer;
 import pacman.view.background.StandardBackgroundDrawer;
 import pacman.view.entity.EntityView;
 import pacman.view.entity.EntityViewImpl;
 import pacman.view.keyboard.KeyboardInputHandler;
-import javafx.geometry.Pos;
+import pacman.view.observer.LivesObserver;
+import pacman.view.observer.ScoreObserver;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Responsible for managing the Pac-Man Game View
  */
-public class GameWindow {
+public class GameWindow implements ScoreObserver, LivesObserver {
 
   public static final File FONT_FILE = new File("src/main/resources/maze/PressStart2P-Regular.ttf");
 
@@ -127,5 +127,21 @@ public class GameWindow {
     }
 
     entityViews.removeIf(EntityView::isMarkedForDelete);
+  }
+
+  @Override
+  public void updateLives(int lives) {
+    for (int i = 0; i < numLives; i++) {
+      livesImageViews.get(i).setVisible(i < lives);
+    }
+
+    if (lives == 0) {
+      gameOverLabel.setVisible(true);
+    }
+  }
+
+  @Override
+  public void updateScore(int newScore) {
+    scoreLabel.setText("Score: " + newScore);
   }
 }

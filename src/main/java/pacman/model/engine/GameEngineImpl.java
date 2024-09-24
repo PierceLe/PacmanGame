@@ -7,7 +7,6 @@ import pacman.model.level.Level;
 import pacman.model.level.LevelImpl;
 import pacman.model.maze.Maze;
 import pacman.model.maze.MazeCreator;
-
 import java.util.List;
 
 /**
@@ -93,6 +92,7 @@ public class GameEngineImpl implements GameEngine {
     public LevelImpl getLevelImpl() {
         return (LevelImpl) this.currentLevel;
     }
+
 
 }
 
