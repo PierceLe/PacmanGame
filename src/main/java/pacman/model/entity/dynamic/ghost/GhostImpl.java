@@ -158,9 +158,11 @@ public class GhostImpl implements Ghost {
                 .build();
           this.kinematicState.left();
           isFirstReset = false;
+//          this.boundingBox.setTopLeft(this.kinematicState.getPosition());
         } else {
             this.kinematicState.setPosition(startingPosition);
             this.kinematicState.left();
+//            this.boundingBox.setTopLeft(this.kinematicState.getPosition());
         }
     }
 
