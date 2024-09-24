@@ -19,6 +19,7 @@ public class Pacman implements Controllable {
   private Image currentImage;
   private Set<Direction> possibleDirections;
   private boolean isClosedImage;
+  private Direction lastDirection;
 
   private int score = 0;
 
@@ -62,6 +63,26 @@ public class Pacman implements Controllable {
   }
 
   public void update() {
+    if(lastDirection != null){
+      if (isValidMove(lastDirection)){
+        switch (lastDirection){
+          case UP:
+            up();
+            break;
+          case DOWN:
+            down();
+            break;
+          case LEFT:
+            left();
+            break;
+          case RIGHT:
+            right();
+            break;
+        }
+        lastDirection = null;
+      }
+
+    }
     kinematicState.update();
     this.boundingBox.setTopLeft(this.kinematicState.getPosition());
   }
@@ -161,5 +182,17 @@ public class Pacman implements Controllable {
   @Override
   public void switchImage() {
     this.isClosedImage = !this.isClosedImage;
+  }
+
+  public boolean isValidMove(Direction direction) {
+    return this.possibleDirections.contains(direction);
+  }
+
+  public void setLastDirection(Direction direction) {
+    lastDirection = direction;
+  }
+
+  public Direction getLastDirection() {
+    return lastDirection;
   }
 }

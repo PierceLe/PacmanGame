@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import pacman.model.engine.GameEngine;
 import pacman.model.entity.Renderable;
+import pacman.model.entity.dynamic.player.Pacman;
 import pacman.view.background.BackgroundDrawer;
 import pacman.view.background.StandardBackgroundDrawer;
 import pacman.view.entity.EntityView;

@@ -1,6 +1,6 @@
 package pacman.model.maze;
 
-import pacman.creator.FactoryCollection;
+import pacman.creator.FactoryCollectionSingleton;
 import pacman.creator.EntityCreator;
 import pacman.model.entity.Renderable;
 
@@ -40,7 +40,7 @@ public class MazeCreator {
                     /**
                      * TODO: Implement Factory Method Pattern
                      */
-                    FactoryCollection factoryCollection = new FactoryCollection();
+                    FactoryCollectionSingleton factoryCollection = FactoryCollectionSingleton.getInstance();
                     EntityCreator entityCreator = factoryCollection.getEntityCreator(row[x]);
                     Renderable renderable = entityCreator == null ? null : entityCreator.createRenderableObject(x * 16, y * 16, row[x]);
                     maze.addRenderable(renderable, row[x], x, y);
@@ -54,7 +54,6 @@ public class MazeCreator {
             System.out.println("No maze file was found.");
             exit(0);
         } catch (Exception e){
-            e.printStackTrace();
             System.out.println("Error");
             exit(0);
         }
