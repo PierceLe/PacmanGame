@@ -12,7 +12,7 @@ public class ConcreteLeftCommand implements Command {
 
     public void execute() {
         if (pacman.isValidMove(Direction.LEFT)) {
-            pacman.down();
+            pacman.left();
         }
         else {
             pacman.setLastDirection(Direction.LEFT);

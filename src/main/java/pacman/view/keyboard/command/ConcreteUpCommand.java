@@ -12,7 +12,7 @@ public class ConcreteUpCommand implements Command {
 
     public void execute() {
         if (pacman.isValidMove(Direction.UP)) {
-            pacman.down();
+            pacman.up();
         }
         else {
             pacman.setLastDirection(Direction.UP);

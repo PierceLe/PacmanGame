@@ -63,6 +63,26 @@ public class Pacman implements Controllable {
   }
 
   public void update() {
+    if(lastDirection != null){
+      if (isValidMove(lastDirection)){
+        switch (lastDirection){
+          case UP:
+            up();
+            break;
+          case DOWN:
+            down();
+            break;
+          case LEFT:
+            left();
+            break;
+          case RIGHT:
+            right();
+            break;
+        }
+        lastDirection = null;
+      }
+
+    }
     kinematicState.update();
     this.boundingBox.setTopLeft(this.kinematicState.getPosition());
   }
