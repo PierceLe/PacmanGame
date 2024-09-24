@@ -5,8 +5,8 @@ import pacman.model.entity.Renderable;
 import pacman.model.entity.dynamic.physics.*;
 import pacman.model.entity.staticentity.collectable.Collectable;
 import pacman.model.level.Level;
-import pacman.view.observer.ScoreObserver;
-import pacman.view.observer.ScoreSubject;
+import pacman.view.observer.scoreObserver.ScoreObserver;
+import pacman.view.observer.scoreObserver.ScoreSubject;
 
 import java.util.*;
 
@@ -130,11 +130,9 @@ public class Pacman implements Controllable, ScoreSubject {
     if (level.isCollectable(renderable)) {
       Collectable collectable = (Collectable) renderable;
       level.collect(collectable);
-      collectable.collect();
 
       // Update score
-      score += collectable.getPoints();
-      notifyObservers();
+      updateScore(collectable.getPoints());
     }
   }
 
@@ -199,6 +197,12 @@ public class Pacman implements Controllable, ScoreSubject {
 
   public Direction getLastDirection() {
     return lastDirection;
+  }
+
+  @Override
+  public void updateScore(int scoreAdded) {
+    score += scoreAdded;
+    notifyObservers();
   }
 
   @Override

@@ -2,10 +2,12 @@ package pacman.model.level;
 
 import org.json.simple.JSONObject;
 import pacman.ConfigurationParseException;
+import pacman.model.engine.GameEngine;
+import pacman.model.engine.GameEngineImpl;
+import pacman.model.engine.GameState;
 import pacman.model.entity.Renderable;
 import pacman.model.entity.dynamic.DynamicEntity;
 import pacman.model.entity.dynamic.ghost.Ghost;
-import pacman.model.entity.dynamic.ghost.GhostImpl;
 import pacman.model.entity.dynamic.ghost.GhostMode;
 import pacman.model.entity.dynamic.physics.PhysicsEngine;
 import pacman.model.entity.dynamic.player.Controllable;
@@ -13,8 +15,8 @@ import pacman.model.entity.dynamic.player.Pacman;
 import pacman.model.entity.staticentity.StaticEntity;
 import pacman.model.entity.staticentity.collectable.Collectable;
 import pacman.model.maze.Maze;
-import pacman.view.observer.LivesObserver;
-import pacman.view.observer.LivesSubject;
+import pacman.view.observer.livesObserver.LivesObserver;
+import pacman.view.observer.livesObserver.LivesSubject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,10 +40,12 @@ public class LevelImpl implements Level, LivesSubject {
   private List<Renderable> collectables;
   private GhostMode currentGhostMode;
   private final List<LivesObserver> livesObserveas;
+  private GameEngineImpl gameEngine;
 
   public LevelImpl(JSONObject levelConfiguration,
-                   Maze maze) {
+                   Maze maze, GameEngineImpl gameEngine) {
     this.renderables = new ArrayList<>();
+    this.gameEngine = gameEngine;
     this.maze = maze;
     this.tickCount = 0;
     this.modeLengths = new HashMap<>();
@@ -179,7 +183,12 @@ public class LevelImpl implements Level, LivesSubject {
 
   @Override
   public boolean isLevelFinished() {
-    return collectables.isEmpty();
+    for (Renderable collectable : collectables) {
+      if (collectable instanceof Collectable && ((Collectable) collectable).isCollectable()) {
+        return false;
+      }
+    }
+    return true;
   }
 
   @Override
@@ -195,9 +204,11 @@ public class LevelImpl implements Level, LivesSubject {
   public void handleLoseLife() {
     setNumLives(getNumLives() - 1);
     if (getNumLives() > 0) {
-      maze.reset(); // Reset player and ghost positions
+      maze.reset();// Reset player and ghost positions
+      gameEngine.updateState(GameState.READY);
     } else {
       handleGameEnd();
+      gameEngine.updateState(GameState.GAME_OVER);
     }
     notifyObservers();
   }
@@ -212,6 +223,15 @@ public class LevelImpl implements Level, LivesSubject {
 
   @Override
   public void collect(Collectable collectable) {
+      collectable.collect();
+      if (isLevelFinished() && gameEngine.getCurrentLevelNo() == gameEngine.getNumLevels() - 1) {
+        System.out.println("WIN");
+        gameEngine.updateState(GameState.WIN);
+      }
+      else if (isLevelFinished()) {
+        gameEngine.nextLevel();
+      }
+
   }
   @Override
   public void registerObserver(LivesObserver livesObserver) {

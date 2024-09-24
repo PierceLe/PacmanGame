@@ -43,4 +43,6 @@ public interface Controllable extends DynamicEntity {
     void setLastDirection(Direction direction);
 
     Direction getLastDirection();
+
+    void updateScore(int score);
 }
