@@ -81,8 +81,8 @@ public class GameWindow implements ScoreObserver, LivesObserver {
     Platform.runLater(() -> {
       // set font FONT_FILE
       gameOverLabel.setFont(Font.loadFont("file:" + FONT_FILE.getAbsolutePath(), 0));
-      gameOverLabel.setLayoutX(scene.getWidth() / 2 - gameOverLabel.getWidth() / 2 - 20); // Cách vị trí trung tâm 20px
-      gameOverLabel.setLayoutY(scene.getHeight() / 2 - gameOverLabel.getHeight() / 2 + 40); // Cách vị trí trung tâm 20px
+      gameOverLabel.setLayoutX(scene.getWidth() / 2 - gameOverLabel.getWidth() / 2 - 20);
+      gameOverLabel.setLayoutY(scene.getHeight() / 2 - gameOverLabel.getHeight() / 2 + 40);
     });
     pane.getChildren().add(gameOverLabel);
 

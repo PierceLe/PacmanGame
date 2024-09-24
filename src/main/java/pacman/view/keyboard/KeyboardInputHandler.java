@@ -38,7 +38,6 @@ public class KeyboardInputHandler {
         remoteController.onKeyPressed(KeyCode.DOWN);
         break;
       case UP:
-        System.out.println("up");
         remoteController.onKeyPressed(KeyCode.UP);
         break;
     }
