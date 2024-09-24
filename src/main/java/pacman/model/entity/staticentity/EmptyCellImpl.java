@@ -3,9 +3,9 @@ package pacman.model.entity.staticentity;
 import javafx.scene.image.Image;
 import pacman.model.entity.dynamic.physics.BoundingBox;
 
-public class CellEntityImpl extends StaticEntityImpl  {
+public class EmptyCellImpl extends StaticEntityImpl  {
 
-    public CellEntityImpl(BoundingBox boundingBox, Layer layer, Image image) {
+    public EmptyCellImpl(BoundingBox boundingBox, Layer layer, Image image) {
         super(boundingBox, layer, image);
     }
 
