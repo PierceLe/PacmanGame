@@ -112,13 +112,12 @@ public class GameWindow implements ScoreObserver, LivesObserver, GameStateObserv
     timeline.play();
 
     model.startGame();
-
     // Create a lives observer
-    ((LivesSubject) model.getLevelImpl()).registerObserver(this);
   }
 
   private void draw() {
     model.tick();
+    ((LivesSubject) model.getLevelImpl()).registerObserver(this);
 
     List<Renderable> entities = model.getRenderables();
 

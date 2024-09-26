@@ -83,4 +83,6 @@ public interface Level {
      * Level will remove all dynamic entities from game.
      */
     void handleGameEnd();
+
+    void setNumLives(int numLives);
 }

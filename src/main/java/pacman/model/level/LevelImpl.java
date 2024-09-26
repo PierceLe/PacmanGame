@@ -2,7 +2,6 @@ package pacman.model.level;
 
 import org.json.simple.JSONObject;
 import pacman.ConfigurationParseException;
-import pacman.model.engine.GameEngine;
 import pacman.model.engine.GameEngineImpl;
 import pacman.model.engine.GameState;
 import pacman.model.entity.Renderable;
@@ -196,17 +195,17 @@ public class LevelImpl implements Level, LivesSubject {
     return this.numLives;
   }
 
-  private void setNumLives(int numLives) {
+  public void setNumLives(int numLives) {
     this.numLives = numLives;
+    notifyObservers();
   }
 
   @Override
   public void handleLoseLife() {
+    System.out.println("lose life");
     setNumLives(getNumLives() - 1);
-    System.out.println("Life now" + getNumLives());
     if (getNumLives() > 0) {
-      int numLivesNow = getNumLives();
-      maze.reset();// Reset player and ghost positions
+      maze.reset();
       gameEngine.updateState(GameState.READY);
     } else {
       handleGameEnd();
@@ -231,13 +230,16 @@ public class LevelImpl implements Level, LivesSubject {
         gameEngine.updateState(GameState.WIN);
       }
       else if (isLevelFinished()) {
+        System.out.println("hi");
         gameEngine.nextLevel();
       }
 
   }
   @Override
   public void registerObserver(LivesObserver livesObserver) {
-    livesObserveas.add(livesObserver);
+    if (!livesObserveas.contains(livesObserver)) {
+      livesObserveas.add(livesObserver);
+    }
   }
 
   @Override
@@ -247,6 +249,7 @@ public class LevelImpl implements Level, LivesSubject {
 
   @Override
   public void notifyObservers() {
+    System.out.println("observer number" + livesObserveas.size());
     for (LivesObserver livesObserver : livesObserveas) {
       livesObserver.updateLives(getNumLives());
     }

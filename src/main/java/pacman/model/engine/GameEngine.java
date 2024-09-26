@@ -59,4 +59,5 @@ public interface GameEngine extends GameStateSubject {
   void updateState(GameState state);
 
   GameState getGameState();
+
 }

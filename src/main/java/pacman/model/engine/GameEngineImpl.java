@@ -144,9 +144,10 @@ public class GameEngineImpl implements GameEngine {
     }
 
     public void nextLevel() {
+        int liveNow = currentLevel.getNumLives();
         currentLevelNo++;
-        System.out.println(currentLevelNo);
-        startGame();
+        startLevel();
+        currentLevel.setNumLives(liveNow);
     }
 
 
