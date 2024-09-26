@@ -2,7 +2,6 @@ package pacman.model.level;
 
 import org.json.simple.JSONObject;
 import pacman.ConfigurationParseException;
-import pacman.model.engine.GameEngine;
 import pacman.model.engine.GameEngineImpl;
 import pacman.model.engine.GameState;
 import pacman.model.entity.Renderable;
@@ -196,7 +195,7 @@ public class LevelImpl implements Level, LivesSubject {
     return this.numLives;
   }
 
-  private void setNumLives(int numLives) {
+  public void setNumLives(int numLives) {
     this.numLives = numLives;
   }
 
