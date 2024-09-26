@@ -1,4 +1,4 @@
-package pacman.creator;
+package pacman.model.entity.creator;
 
 import javafx.scene.image.Image;
 import pacman.model.entity.Renderable;
@@ -15,8 +15,8 @@ public abstract class EntityCreator {
 
 
     protected BoundingBoxImpl getBoundingBoxOfObject(int x, int y) {
-        Double imageWidth = image.getWidth();
-        Double imageHeight = image.getHeight();
+        double imageWidth = image.getWidth();
+        double imageHeight = image.getHeight();
         Vector2D topLeftCorner = new Vector2D(x , y);
         return new BoundingBoxImpl(topLeftCorner, imageHeight, imageWidth);
     }
