@@ -197,15 +197,15 @@ public class LevelImpl implements Level, LivesSubject {
 
   public void setNumLives(int numLives) {
     this.numLives = numLives;
+    notifyObservers();
   }
 
   @Override
   public void handleLoseLife() {
+    System.out.println("lose life");
     setNumLives(getNumLives() - 1);
-    System.out.println("Life now" + getNumLives());
     if (getNumLives() > 0) {
-      int numLivesNow = getNumLives();
-      maze.reset();// Reset player and ghost positions
+      maze.reset();
       gameEngine.updateState(GameState.READY);
     } else {
       handleGameEnd();
@@ -230,13 +230,16 @@ public class LevelImpl implements Level, LivesSubject {
         gameEngine.updateState(GameState.WIN);
       }
       else if (isLevelFinished()) {
+        System.out.println("hi");
         gameEngine.nextLevel();
       }
 
   }
   @Override
   public void registerObserver(LivesObserver livesObserver) {
-    livesObserveas.add(livesObserver);
+    if (!livesObserveas.contains(livesObserver)) {
+      livesObserveas.add(livesObserver);
+    }
   }
 
   @Override
@@ -246,6 +249,7 @@ public class LevelImpl implements Level, LivesSubject {
 
   @Override
   public void notifyObservers() {
+    System.out.println("observer number" + livesObserveas.size());
     for (LivesObserver livesObserver : livesObserveas) {
       livesObserver.updateLives(getNumLives());
     }
