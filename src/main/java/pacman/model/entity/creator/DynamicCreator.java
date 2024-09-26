@@ -1,4 +1,4 @@
-package pacman.creator;
+package pacman.model.entity.creator;
 
 import javafx.scene.image.Image;
 import pacman.model.entity.Renderable;
@@ -27,7 +27,7 @@ public class DynamicCreator extends EntityCreator {
         initPacManVisuals();
     }
     public Renderable createRenderableObject(int x, int y, char rendererSymbol) {
-        BoundingBoxImpl boundingBox = getBoundingBoxOfObject(x, y - 4);
+        BoundingBoxImpl boundingBox = getBoundingBoxOfObject(x + 4, y - 4);
         KinematicStateImpl kinematicState = new KinematicStateImpl.KinematicStateBuilder()
             .setPosition(new Vector2D(boundingBox.getLeftX(), boundingBox.getTopY())).build();
 

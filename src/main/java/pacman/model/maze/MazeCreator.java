@@ -1,7 +1,7 @@
 package pacman.model.maze;
 
-import pacman.creator.FactoryCollectionSingleton;
-import pacman.creator.EntityCreator;
+import pacman.model.entity.creator.FactoryCollectionSingleton;
+import pacman.model.entity.creator.EntityCreator;
 import pacman.model.entity.Renderable;
 
 import java.io.File;
@@ -37,9 +37,6 @@ public class MazeCreator {
                 char[] row = line.toCharArray();
 
                 for (int x = 0; x < row.length; x++){
-                    /**
-                     * TODO: Implement Factory Method Pattern
-                     */
                     FactoryCollectionSingleton factoryCollection = FactoryCollectionSingleton.getInstance();
                     EntityCreator entityCreator = factoryCollection.getEntityCreator(row[x]);
                     Renderable renderable = entityCreator == null ? null : entityCreator.createRenderableObject(x * 16, y * 16, row[x]);

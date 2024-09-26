@@ -1,4 +1,4 @@
-package pacman.creator;
+package pacman.model.entity.creator;
 
 import javafx.scene.image.Image;
 import pacman.model.entity.Renderable;

@@ -1,4 +1,4 @@
-package pacman.creator;
+package pacman.model.entity.creator;
 
 import javafx.scene.image.Image;
 import pacman.model.maze.RenderableType;
@@ -7,7 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FactoryCollectionSingleton {
-    private static FactoryCollectionSingleton instance;  // Static instance for Singleton
+    // Static instance for Singleton
+    private static FactoryCollectionSingleton instance;
     private Map<Character, EntityCreator> factories;
     private HashMap<Character, Image> images;
 
