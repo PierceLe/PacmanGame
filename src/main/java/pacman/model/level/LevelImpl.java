@@ -203,7 +203,9 @@ public class LevelImpl implements Level, LivesSubject {
   @Override
   public void handleLoseLife() {
     setNumLives(getNumLives() - 1);
+    System.out.println("Life now" + getNumLives());
     if (getNumLives() > 0) {
+      int numLivesNow = getNumLives();
       maze.reset();// Reset player and ghost positions
       gameEngine.updateState(GameState.READY);
     } else {

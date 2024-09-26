@@ -1,5 +1,8 @@
 package pacman.model.engine;
 
+import javafx.animation.PauseTransition;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import pacman.model.entity.Renderable;
@@ -89,7 +92,10 @@ public class GameEngineImpl implements GameEngine {
 
     @Override
     public void tick() {
-        currentLevel.tick();
+        if (currentGameState == GameState.RUNNING) {
+            currentLevel.tick();
+        }
+
     }
 
     @Override

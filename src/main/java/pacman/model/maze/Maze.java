@@ -4,6 +4,7 @@ import pacman.model.entity.Renderable;
 import pacman.model.entity.dynamic.DynamicEntity;
 import pacman.model.entity.dynamic.ghost.GhostImpl;
 import pacman.model.entity.dynamic.physics.Direction;
+import pacman.model.entity.dynamic.player.Pacman;
 
 import java.util.*;
 
@@ -147,5 +148,9 @@ public class Maze {
     for (Renderable renderable : renderables) {
       renderable.reset();
     }
+  }
+
+  public Pacman getPacman() {
+    return (Pacman) this.pacman;
   }
 }
