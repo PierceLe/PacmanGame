@@ -10,7 +10,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 import pacman.model.engine.GameEngine;
 import pacman.model.engine.GameState;
@@ -42,36 +41,40 @@ public class GameWindow implements ScoreObserver, LivesObserver, GameStateObserv
   private final GameEngine model;
   private final List<EntityView> entityViews;
 
-  private final Label scoreLabel;
+  private Label scoreLabel;
   private final int numLives = 3;
   private final List<ImageView> livesImageViews = new ArrayList<>();
-  private final Label gameOverLabel = new Label("GAME OVER");
-  private Text stateText;
+  private final Label stateLabel = new Label();
 
   public GameWindow(GameEngine model, int width, int height) {
+    entityViews = new ArrayList<>();
     this.model = model;
+    this.pane = new Pane();
+    this.scene = new Scene(pane, width, height);
 
-    // Create a score observer
+    registerObservers();
+    initializeScoreLabel();
+    initializeLivesImages(height);
+    initializeStateLabel();
+    initializeKeyboardHandler();
+    initializeBackground();
+  }
+
+  private void registerObservers() {
     ((ScoreSubject) model.getPacman()).registerObserver(this);
     model.registerObserver(this);
+  }
 
-    //init score label
+  private void initializeScoreLabel() {
     scoreLabel = new Label("0");
-    pane = new Pane();
-    scene = new Scene(pane, width, height);
-
-    entityViews = new ArrayList<>();
-
-    // Add the score label to the pane
     scoreLabel.setLayoutX(10);
     scoreLabel.setLayoutY(10);
     scoreLabel.setStyle("-fx-text-fill: white");
-    // set font FONT_FILE
     scoreLabel.setFont(Font.loadFont("file:" + FONT_FILE.getAbsolutePath(), 24));
-
     pane.getChildren().add(scoreLabel);
+  }
 
-    // Add the game over label to the pane
+  private void initializeLivesImages(int height) {
     for (int i = 0; i < numLives; i++) {
       ImageView livesImageView = new ImageView("/maze/pacman/playerRight.png");
       livesImageView.setFitWidth(20);
@@ -81,21 +84,23 @@ public class GameWindow implements ScoreObserver, LivesObserver, GameStateObserv
       livesImageViews.add(livesImageView);
       pane.getChildren().add(livesImageView);
     }
+  }
 
-    // Add the game over label to the pane
-    gameOverLabel.setStyle("-fx-text-fill: red;");
-    gameOverLabel.setVisible(false);
+  private void initializeStateLabel() {
     Platform.runLater(() -> {
-      // set font FONT_FILE
-      gameOverLabel.setFont(Font.loadFont("file:" + FONT_FILE.getAbsolutePath(), 0));
-      gameOverLabel.setLayoutX(scene.getWidth() / 2 - gameOverLabel.getWidth() / 2 - 20);
-      gameOverLabel.setLayoutY(scene.getHeight() / 2 - gameOverLabel.getHeight() / 2 + 40);
+      stateLabel.setFont(Font.loadFont("file:" + FONT_FILE.getAbsolutePath(), 0));
+      stateLabel.setLayoutX(scene.getWidth() / 2 - stateLabel.getWidth() / 2 - 20);
+      stateLabel.setLayoutY(scene.getHeight() / 2 - stateLabel.getHeight() / 2 + 40);
     });
-    pane.getChildren().add(gameOverLabel);
+    pane.getChildren().add(stateLabel);
+  }
 
+  private void initializeKeyboardHandler() {
     KeyboardInputHandler keyboardInputHandler = new KeyboardInputHandler(model);
     scene.setOnKeyPressed(keyboardInputHandler::handlePressed);
+  }
 
+  private void initializeBackground() {
     BackgroundDrawer backgroundDrawer = new StandardBackgroundDrawer();
     backgroundDrawer.draw(model, pane);
   }
@@ -107,12 +112,9 @@ public class GameWindow implements ScoreObserver, LivesObserver, GameStateObserv
   public void run() {
     Timeline timeline = new Timeline(new KeyFrame(Duration.millis(34),
             t -> this.draw()));
-
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
-
     model.startGame();
-    // Create a lives observer
   }
 
   private void draw() {
@@ -164,46 +166,24 @@ public class GameWindow implements ScoreObserver, LivesObserver, GameStateObserv
 
   @Override
   public void updateState() {
-    if (stateText == null) {
-      stateText = new Text();
-      stateText.setX(165);
-      stateText.setY(340);
-      stateText.setFont(javafx.scene.text.Font.loadFont("file:" + FONT_FILE.getAbsolutePath(), 20));
-      pane.getChildren().add(stateText);
-    }
     if (model.getGameState() == GameState.LOADING) {
-      drawStateBasedOnContentAndColour("READY!", "YELLOW");
-      PauseTransition pause = new PauseTransition(Duration.seconds(3.4));
-      pause.setOnFinished(e -> {
-        stateText.setText("");
-        model.updateState(GameState.PROCESSING);
-      });
-      pause.play();
+      updateStateLabelWithPause("READY!", "YELLOW", 3.4, () -> model.updateState(GameState.PROCESSING));
     } else if (model.getGameState() == GameState.LOSE) {
-      gameOverLabel.setVisible(true);
-      PauseTransition pause = new PauseTransition(Duration.seconds(3.4));
-      pause.setOnFinished(e -> {
-        stateText.setText("");
-        System.exit(0);
-      });
-      pause.play();
-    }
-    else if (model.getGameState() == GameState.WIN) {
-      drawStateBasedOnContentAndColour("YOU WIN!", "WHITE");
-      PauseTransition pause = new PauseTransition(Duration.seconds(3.4));
-      pause.setOnFinished(e -> {
-        stateText.setText("");
-        System.exit(0);
-      });
-      pause.play();
+      updateStateLabelWithPause("GAME OVER", "RED", 3.4, () -> System.exit(0));
+    } else if (model.getGameState() == GameState.WIN) {
+      updateStateLabelWithPause("YOU WIN!", "WHITE", 3.4, () -> System.exit(0));
     } else {
-      stateText.setText("");
+      stateLabel.setVisible(false);
     }
-
-
   }
-  private void drawStateBasedOnContentAndColour(String content, String colour) {
-    stateText.setText(content);
-    stateText.setFill(Paint.valueOf(colour));
+
+  private void updateStateLabelWithPause(String text, String color, double duration, Runnable onFinish) {
+    stateLabel.setText(text);
+    stateLabel.setTextFill(Paint.valueOf(color));
+    stateLabel.setVisible(true);
+
+    PauseTransition pause = new PauseTransition(Duration.seconds(duration));
+    pause.setOnFinished(e -> onFinish.run());
+    pause.play();
   }
 }
