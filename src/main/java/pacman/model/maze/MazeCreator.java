@@ -52,7 +52,6 @@ public class MazeCreator {
             exit(0);
         } catch (Exception e){
             System.out.println("Error");
-            e.printStackTrace();
             exit(0);
         }
 

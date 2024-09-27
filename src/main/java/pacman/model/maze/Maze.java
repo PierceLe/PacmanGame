@@ -5,6 +5,7 @@ import pacman.model.entity.dynamic.DynamicEntity;
 import pacman.model.entity.dynamic.ghost.GhostImpl;
 import pacman.model.entity.dynamic.physics.Direction;
 import pacman.model.entity.dynamic.player.Pacman;
+import pacman.model.entity.staticentity.collectable.Pellet;
 
 import java.util.*;
 
@@ -16,7 +17,7 @@ public class Maze {
   private static final int MAX_CENTER_DISTANCE = 4;
   private final List<Renderable> renderables;
   private final List<Renderable> ghosts;
-  private final List<Renderable> pellets;
+  private List<Renderable> pellets;
   private final Map<String, Boolean> isWall;
   private Renderable pacman;
   private int numLives;
@@ -152,5 +153,14 @@ public class Maze {
 
   public Pacman getPacman() {
     return (Pacman) this.pacman;
+  }
+
+  public void softReset() {
+    for (Renderable renderable : renderables) {
+      if (renderable instanceof Pellet) {
+        continue;
+      }
+      renderable.reset();
+    }
   }
 }
