@@ -1,14 +1,15 @@
-package pacman.model.entity.creator;
+package pacman.entityfactory;
 
 import javafx.scene.image.Image;
 import pacman.model.entity.Renderable;
 import pacman.model.entity.dynamic.physics.BoundingBoxImpl;
 import pacman.model.entity.dynamic.physics.Vector2D;
 
-public abstract class EntityCreator {
+public abstract class EntityFactory {
     protected Image image;
+    protected Renderable.Layer layer;
 
-    public EntityCreator(Image image) {
+    public EntityFactory(Image image) {
         this.image = image;
     }
 
@@ -22,5 +23,5 @@ public abstract class EntityCreator {
     }
 
 
-    public abstract Renderable createRenderableObject(int x, int y, char rendererSymbol);
+    public abstract Renderable createRenderableObject(int x, int y);
 }

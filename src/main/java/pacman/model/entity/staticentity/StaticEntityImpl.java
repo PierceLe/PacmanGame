@@ -10,11 +10,13 @@ public class StaticEntityImpl implements Renderable, StaticEntity {
     private final Image image;
     private final BoundingBox boundingBox;
     private Layer layer;
+    private Boolean canPassThrough;
 
     public StaticEntityImpl(BoundingBox boundingBox, Layer layer, Image image) {
         this.image = image;
         this.layer = layer;
         this.boundingBox = boundingBox;
+        this.canPassThrough = false;
     }
 
     @Override
@@ -56,6 +58,11 @@ public class StaticEntityImpl implements Renderable, StaticEntity {
 
     @Override
     public boolean canPassThrough(){
-        return false;
+        return canPassThrough;
     }
+
+    public void seteCanPassThrough(boolean canPassThrough) {
+        this.canPassThrough = canPassThrough;
+    }
+
 }

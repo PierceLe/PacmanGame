@@ -1,7 +1,7 @@
 package pacman.model.maze;
 
-import pacman.model.entity.creator.FactoryCollectionSingleton;
-import pacman.model.entity.creator.EntityCreator;
+import pacman.entityfactory.FactoryCollectionSingleton;
+import pacman.entityfactory.EntityFactory;
 import pacman.model.entity.Renderable;
 
 import java.io.File;
@@ -38,8 +38,8 @@ public class MazeCreator {
 
                 for (int x = 0; x < row.length; x++){
                     FactoryCollectionSingleton factoryCollection = FactoryCollectionSingleton.getInstance();
-                    EntityCreator entityCreator = factoryCollection.getEntityCreator(row[x]);
-                    Renderable renderable = entityCreator == null ? null : entityCreator.createRenderableObject(x * 16, y * 16, row[x]);
+                    EntityFactory entityCreator = factoryCollection.getEntityCreator(row[x]);
+                    Renderable renderable = entityCreator == null ? null : entityCreator.createRenderableObject(x * 16, y * 16);
                     maze.addRenderable(renderable, row[x], x, y);
                 }
                 y += 1;
@@ -52,6 +52,7 @@ public class MazeCreator {
             exit(0);
         } catch (Exception e){
             System.out.println("Error");
+            e.printStackTrace();
             exit(0);
         }
 
