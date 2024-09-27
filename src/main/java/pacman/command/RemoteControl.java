@@ -6,12 +6,12 @@ import pacman.model.entity.dynamic.player.Controllable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RemoteController {
+public class RemoteControl {
     Map<KeyCode, Command> commands = new HashMap<>();
     Controllable pacman;
 
 
-    public RemoteController(Controllable pacman){
+    public RemoteControl(Controllable pacman){
         for(KeyCode keyCode : KeyCode.values()){
             commands.put(keyCode, new ConcreteNoCommand());
         }

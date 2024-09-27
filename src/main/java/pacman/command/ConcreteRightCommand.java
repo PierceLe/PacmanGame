@@ -11,11 +11,11 @@ public class ConcreteRightCommand implements Command {
     }
 
     public void execute() {
-        if (pacman.isValidMove(Direction.RIGHT)) {
+        if (pacman.getPossibleDirections().contains(Direction.RIGHT)) {
             pacman.right();
         }
         else {
-            pacman.setLastDirection(Direction.RIGHT);
+            pacman.setPreviousDirection(Direction.RIGHT);
         }
     }
 

@@ -67,25 +67,22 @@ public class Pacman implements Controllable, ScoreSubject {
   }
 
   public void update() {
-    if(lastDirection != null){
-      if (isValidMove(lastDirection)){
-        switch (lastDirection){
-          case UP:
-            up();
-            break;
-          case DOWN:
-            down();
-            break;
-          case LEFT:
-            left();
-            break;
-          case RIGHT:
-            right();
-            break;
-        }
-        lastDirection = null;
+    if(lastDirection != null && this.possibleDirections.contains(lastDirection)){
+      switch (lastDirection){
+        case UP:
+          up();
+          break;
+        case DOWN:
+          down();
+          break;
+        case LEFT:
+          left();
+          break;
+        case RIGHT:
+          right();
+          break;
       }
-
+      resetPreviousDirection();
     }
     kinematicState.update();
     this.boundingBox.setTopLeft(this.kinematicState.getPosition());
@@ -187,17 +184,20 @@ public class Pacman implements Controllable, ScoreSubject {
     this.isClosedImage = !this.isClosedImage;
   }
 
-  public boolean isValidMove(Direction direction) {
-    return this.possibleDirections.contains(direction);
+  @Override
+  public Set<Direction> getPossibleDirections() {
+    return this.possibleDirections;
   }
 
-  public void setLastDirection(Direction direction) {
+  public void setPreviousDirection(Direction direction) {
     lastDirection = direction;
   }
 
-  public Direction getLastDirection() {
-    return lastDirection;
+  @Override
+  public void resetPreviousDirection() {
+    this.lastDirection = null;
   }
+
 
   @Override
   public void updateScore(int scoreAdded) {

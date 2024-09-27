@@ -11,11 +11,11 @@ public class ConcreteUpCommand implements Command {
     }
 
     public void execute() {
-        if (pacman.isValidMove(Direction.UP)) {
+        if (pacman.getPossibleDirections().contains(Direction.UP)) {
             pacman.up();
         }
         else {
-            pacman.setLastDirection(Direction.UP);
+            pacman.setPreviousDirection(Direction.UP);
         }
     }
 

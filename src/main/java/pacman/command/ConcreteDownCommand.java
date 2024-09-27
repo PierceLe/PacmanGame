@@ -11,11 +11,11 @@ public class ConcreteDownCommand implements Command {
     }
 
     public void execute() {
-        if (pacman.isValidMove(Direction.DOWN)) {
+        if (pacman.getPossibleDirections().contains(Direction.DOWN)) {
             pacman.down();
         }
         else {
-            pacman.setLastDirection(Direction.DOWN);
+            pacman.setPreviousDirection(Direction.DOWN);
         }
     }
 
