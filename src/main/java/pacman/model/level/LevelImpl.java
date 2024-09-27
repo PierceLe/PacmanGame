@@ -226,7 +226,7 @@ public class LevelImpl implements Level, LivesSubject {
   public void collect(Collectable collectable) {
       collectable.collect();
       if (isLevelFinished() && gameEngine.getCurrentLevelNo() == gameEngine.getNumLevels() - 1) {
-        System.out.println("WIN");
+        handleGameEnd();
         gameEngine.updateState(GameState.WIN);
       }
       else if (isLevelFinished()) {
