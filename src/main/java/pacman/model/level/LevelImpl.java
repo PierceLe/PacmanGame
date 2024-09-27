@@ -202,7 +202,6 @@ public class LevelImpl implements Level, LivesSubject {
 
   @Override
   public void handleLoseLife() {
-    System.out.println("lose life");
     setNumLives(getNumLives() - 1);
     if (getNumLives() > 0) {
       maze.reset();
@@ -230,7 +229,6 @@ public class LevelImpl implements Level, LivesSubject {
         gameEngine.updateState(GameState.WIN);
       }
       else if (isLevelFinished()) {
-        System.out.println("hi");
         gameEngine.nextLevel();
       }
 
@@ -249,7 +247,6 @@ public class LevelImpl implements Level, LivesSubject {
 
   @Override
   public void notifyObservers() {
-    System.out.println("observer number" + livesObserveas.size());
     for (LivesObserver livesObserver : livesObserveas) {
       livesObserver.updateLives(getNumLives());
     }
