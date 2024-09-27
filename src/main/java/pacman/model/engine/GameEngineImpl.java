@@ -26,7 +26,7 @@ public class GameEngineImpl implements GameEngine {
 
     public GameEngineImpl(String configPath) {
         this.currentLevelNo = 0;
-        currentGameState = GameState.READY;
+        currentGameState = GameState.LOADING;
         observers = new ArrayList<>();
         init(new GameConfigurationReader(configPath));
     }
@@ -77,7 +77,7 @@ public class GameEngineImpl implements GameEngine {
     }
 
     private void startLevel() {
-        updateState(GameState.READY);
+        updateState(GameState.LOADING);
         JSONObject levelConfig = (JSONObject) levelConfigs.get(currentLevelNo);
         // reset renderables to starting state
         maze.reset();
@@ -87,7 +87,7 @@ public class GameEngineImpl implements GameEngine {
 
     @Override
     public void tick() {
-        if (currentGameState == GameState.RUNNING) {
+        if (currentGameState == GameState.PROCESSING) {
             currentLevel.tick();
         }
 

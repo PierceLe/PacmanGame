@@ -171,15 +171,15 @@ public class GameWindow implements ScoreObserver, LivesObserver, GameStateObserv
       stateText.setFont(javafx.scene.text.Font.loadFont("file:" + FONT_FILE.getAbsolutePath(), 20));
       pane.getChildren().add(stateText);
     }
-    if (model.getGameState() == GameState.READY) {
+    if (model.getGameState() == GameState.LOADING) {
       drawStateBasedOnContentAndColour("READY!", "YELLOW");
       PauseTransition pause = new PauseTransition(Duration.seconds(3.4));
       pause.setOnFinished(e -> {
         stateText.setText("");
-        model.updateState(GameState.RUNNING);
+        model.updateState(GameState.PROCESSING);
       });
       pause.play();
-    } else if (model.getGameState() == GameState.GAME_OVER) {
+    } else if (model.getGameState() == GameState.LOSE) {
       gameOverLabel.setVisible(true);
       PauseTransition pause = new PauseTransition(Duration.seconds(3.4));
       pause.setOnFinished(e -> {

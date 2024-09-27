@@ -205,10 +205,10 @@ public class LevelImpl implements Level, LivesSubject {
     setNumLives(getNumLives() - 1);
     if (getNumLives() > 0) {
       maze.reset();
-      gameEngine.updateState(GameState.READY);
+      gameEngine.updateState(GameState.LOADING);
     } else {
       handleGameEnd();
-      gameEngine.updateState(GameState.GAME_OVER);
+      gameEngine.updateState(GameState.LOSE);
     }
   }
 
