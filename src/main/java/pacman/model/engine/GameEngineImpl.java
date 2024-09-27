@@ -1,8 +1,5 @@
 package pacman.model.engine;
 
-import javafx.animation.PauseTransition;
-import javafx.scene.text.Text;
-import javafx.util.Duration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import pacman.model.entity.Renderable;
@@ -10,10 +7,9 @@ import pacman.model.level.Level;
 import pacman.model.level.LevelImpl;
 import pacman.model.maze.Maze;
 import pacman.model.maze.MazeCreator;
-import pacman.view.observer.gameStateObserver.GameStateObserver;
+import pacman.observer.gameStateObserver.GameStateObserver;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -44,7 +40,6 @@ public class GameEngineImpl implements GameEngine {
 
         // Get level configurations
         this.levelConfigs = gameConfigurationReader.getLevelConfigs();
-        System.out.println(levelConfigs.toJSONString());
         this.numLevels = levelConfigs.size();
         if (levelConfigs.isEmpty()) {
             System.exit(0);

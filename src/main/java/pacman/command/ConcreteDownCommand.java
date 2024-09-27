@@ -4,7 +4,7 @@ import pacman.model.entity.dynamic.physics.Direction;
 import pacman.model.entity.dynamic.player.Controllable;
 
 public class ConcreteDownCommand implements Command {
-    private Controllable pacman;
+    private final Controllable pacman;
 
     public ConcreteDownCommand(Controllable pacman) {
         this.pacman = pacman;

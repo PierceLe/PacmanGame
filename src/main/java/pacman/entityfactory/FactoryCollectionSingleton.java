@@ -1,19 +1,17 @@
 package pacman.entityfactory;
 
-import javafx.scene.image.Image;
+
 import pacman.entityfactory.dynamicentity.GhostsFactory;
 import pacman.entityfactory.dynamicentity.PlayerFactory;
 import pacman.entityfactory.staticentity.EmptyCellFactory;
 import pacman.entityfactory.staticentity.PelletsFactory;
 import pacman.entityfactory.staticentity.WallsFactory;
-import pacman.model.maze.RenderableType;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class FactoryCollectionSingleton {
     // Static instance for Singleton
-    private static FactoryCollectionSingleton instance;
+    private static volatile FactoryCollectionSingleton instance;
     private final Map<Character, EntityFactory> factories;
 
     // Private constructor to prevent instantiation

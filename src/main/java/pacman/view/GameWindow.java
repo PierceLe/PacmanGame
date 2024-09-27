@@ -20,11 +20,11 @@ import pacman.view.background.StandardBackgroundDrawer;
 import pacman.view.entity.EntityView;
 import pacman.view.entity.EntityViewImpl;
 import pacman.view.keyboard.KeyboardInputHandler;
-import pacman.view.observer.gameStateObserver.GameStateObserver;
-import pacman.view.observer.livesObserver.LivesObserver;
-import pacman.view.observer.livesObserver.LivesSubject;
-import pacman.view.observer.scoreObserver.ScoreObserver;
-import pacman.view.observer.scoreObserver.ScoreSubject;
+import pacman.observer.gameStateObserver.GameStateObserver;
+import pacman.observer.livesObserver.LivesObserver;
+import pacman.observer.livesObserver.LivesSubject;
+import pacman.observer.scoreObserver.ScoreObserver;
+import pacman.observer.scoreObserver.ScoreSubject;
 
 import java.io.File;
 import java.util.ArrayList;

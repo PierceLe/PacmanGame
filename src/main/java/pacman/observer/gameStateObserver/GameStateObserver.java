@@ -1,4 +1,4 @@
-package pacman.view.observer.gameStateObserver;
+package pacman.observer.gameStateObserver;
 
 
 public interface GameStateObserver {

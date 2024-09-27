@@ -6,6 +6,7 @@ import pacman.model.maze.RenderableType;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class ImageCollectionSingleton {
 
@@ -75,7 +76,7 @@ public class ImageCollectionSingleton {
 
     // Utility method to load an image from a path
     private Image loadImage(String path) {
-        return new Image(getClass().getResource(path).toExternalForm());
+        return new Image(Objects.requireNonNull(getClass().getResource(path)).toExternalForm());
     }
 
     // Getter for renderable images

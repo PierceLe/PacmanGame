@@ -1,10 +1,7 @@
 package pacman.model.engine;
 
 import pacman.model.entity.Renderable;
-import pacman.model.entity.dynamic.player.Pacman;
-import pacman.model.level.Level;
-import pacman.view.observer.gameStateObserver.GameStateObserver;
-import pacman.view.observer.gameStateObserver.GameStateSubject;
+import pacman.observer.gameStateObserver.GameStateSubject;
 
 import java.util.List;
 

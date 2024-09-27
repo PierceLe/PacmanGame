@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Random;
 
 public class GhostsFactory extends DynamicFactory {
-    private Map<Integer, Vector2D> corners;
+    private final Map<Integer, Vector2D> corners;
     private final Random RANDOM;
 
 

@@ -4,9 +4,7 @@ import javafx.scene.image.Image;
 import pacman.entityfactory.EntityFactory;
 import pacman.model.entity.Renderable;
 import pacman.model.entity.dynamic.physics.*;
-import pacman.model.entity.dynamic.player.PacmanVisual;
 
-import java.util.*;
 
 public abstract class DynamicFactory extends EntityFactory {
 

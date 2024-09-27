@@ -1,4 +1,4 @@
-package pacman.view.observer.livesObserver;
+package pacman.observer.livesObserver;
 
 public interface LivesSubject {
     void registerObserver(LivesObserver observer);

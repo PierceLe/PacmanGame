@@ -14,8 +14,8 @@ import pacman.model.entity.dynamic.player.Pacman;
 import pacman.model.entity.staticentity.StaticEntity;
 import pacman.model.entity.staticentity.collectable.Collectable;
 import pacman.model.maze.Maze;
-import pacman.view.observer.livesObserver.LivesObserver;
-import pacman.view.observer.livesObserver.LivesSubject;
+import pacman.observer.livesObserver.LivesObserver;
+import pacman.observer.livesObserver.LivesSubject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
