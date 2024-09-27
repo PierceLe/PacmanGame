@@ -210,7 +210,6 @@ public class LevelImpl implements Level, LivesSubject {
       handleGameEnd();
       gameEngine.updateState(GameState.GAME_OVER);
     }
-    notifyObservers();
   }
 
   @Override
