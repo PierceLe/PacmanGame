@@ -1,4 +1,4 @@
-package pacman.view.keyboard.command;
+package pacman.command;
 
 public class ConcreteNoCommand implements Command {
 

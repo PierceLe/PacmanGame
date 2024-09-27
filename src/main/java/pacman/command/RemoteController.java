@@ -1,9 +1,6 @@
-package pacman.view.keyboard.command;
+package pacman.command;
 
 import javafx.scene.input.KeyCode;
-import pacman.model.engine.GameEngine;
-import pacman.model.entity.Renderable;
-import pacman.model.entity.dynamic.physics.Direction;
 import pacman.model.entity.dynamic.player.Controllable;
 
 import java.util.HashMap;

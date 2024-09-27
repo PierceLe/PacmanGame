@@ -1,10 +1,10 @@
-package pacman.view.keyboard.command;
+package pacman.command;
 
 import pacman.model.entity.dynamic.physics.Direction;
 import pacman.model.entity.dynamic.player.Controllable;
 
 public class ConcreteUpCommand implements Command {
-    private Controllable pacman;
+    private final Controllable pacman;
 
     public ConcreteUpCommand(Controllable pacman) {
         this.pacman = pacman;
